@@ -1,0 +1,72 @@
+[user]
+	name = Fabien Udriot
+	email = fabien.udriot@typo3.org
+	date = YYYY
+[color]
+	ui = auto
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[core]
+	autocrlf = input
+	safecrlf = true
+	filemode = false
+
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	s = status -s
+	br = branch
+
+	# ADD
+	a = add .
+
+	# BRANCH
+	track = for-each-ref --format='%(refname:short)     <---   %(upstream:short)' refs/heads
+	tr = for-each-ref --format='%(refname:short)     <---   %(upstream:short)' refs/heads
+
+	# PUSH
+	pu = push origin master
+
+	# DIFF
+	df = diff
+	da = diff --name-only --diff-filter=M
+
+	# SHOW
+	dfile =  show --pretty="format:" --name-only
+	dfiles =  show --name-only
+
+	# LOG
+	l1 = log --max-count=1 --stat
+	l2 = log --max-count=2 --stat
+	l3 = log --max-count=3 --stat
+	l4 = log --max-count=4 --stat
+	l5 = log --max-count=5 --stat
+	hs = !git --no-pager log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --max-count=20
+	history = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	pa = !git --no-pager log origin/master..HEAD
+	dl = !git --no-pager log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit  master..origin/master
+	dlp = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -p  master..origin/master
+
+	# MISC
+	conf = config --global --edit
+	type = cat-file -t
+	dump = cat-file -p
+
+	# Pull submodules from origin master
+	pulls = "!f() { git pull && git submodule update --init --recursive; }; f"
+
+[merge]
+	tool = opendiff
+[http]
+	sslVerify = false
+[mergetool]
+	keepBackup = true
+[branch "master"]
+	rebase = true
+[branch]
+	autosetuprebase = remote
+[push]
+	default = simple

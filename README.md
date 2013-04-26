@@ -1,2 +1,4 @@
-service-svn2git
-===============
+Description
+===========
+
+Recipe for synchronizing TYPO3 SVN extensions to Github
