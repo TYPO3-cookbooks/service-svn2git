@@ -82,9 +82,9 @@ end
 
 # Add cron task
 cron "reset-demo" do
-  #hour "0,3,6,9,12,15,18,21"
+  hour "1,13"
+  minute "0"
   user "svn2git"
   mailto "fabien.udriot@typo3.org"
-  minute "5"
   command "cd /home/svn2git/Svn2Git; /usr/bin/flock -n /tmp/svn2git.lockfile /usr/bin/php console.php"
 end
