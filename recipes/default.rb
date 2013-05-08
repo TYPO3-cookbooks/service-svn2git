@@ -17,6 +17,13 @@
 # limitations under the License.
 #
 
+###########################
+# IMPORTANT NOTICE:
+# In order to work, version 1.8 of Git is required. However, Debian squeeze still has 1.7.* as default
+# Some manual commands were executed:
+# wget http://ftp.ch.debian.org/debian/pool/main/g/git/git_1.8.3~rc1-1_amd64.deb
+# dpkg -i git_1.8.3~rc1-1_amd64.deb
+
 # Install packages
 package "php5"
 package "php5-cli"
