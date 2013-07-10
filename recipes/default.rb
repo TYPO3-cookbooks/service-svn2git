@@ -49,33 +49,47 @@ user "svn2git" do
   supports :manage_home => true
 end
 
-# Create .ssh if not yet created
-directory "/home/svn2git/.ssh" do
-  owner "svn2git"
-  group "svn2git"
-  mode "0700"
-  action :create
+# Create some directories if not yet created
+%w{.ssh Scripts}.each do |directory|
+  directory "/home/svn2git/#{directory}" do
+    owner "svn2git"
+    group "svn2git"
+    mode "0700"
+    action :create
+  end
 end
 
-# Add some authorized key
-template "/home/svn2git/.ssh/authorized_keys" do
-  path "/home/svn2git/.ssh/authorized_keys"
-  source "authorized_keys.erb"
-  owner "svn2git"
-  group "svn2git"
-  mode "0700"
-end
+templates = {
+  # For (my) convenience sake, add some git default shortcut
+  'gitconfig.erb' => {
+    :path => '.gitconfig',
+    :permission => 0644
+  },
 
-# For (my) convenience sake, add some git default shortcut
-template "/home/svn2git/.gitconfig" do
-  path "/home/svn2git/.gitconfig"
-  source "gitconfig.erb"
-  owner "svn2git"
-  group "svn2git"
+  # Authorized key to log-in
+  'authorized_keys.erb' => {
+    :path => '.ssh/authorized_keys',
+    :permission => 0600
+  },
+
+  # Script launcher for the Cron job
+  'svn2git.sh' => {
+    :path => 'Scripts/svn2git.sh',
+    :permission => 0755
+  }
+}
+
+templates.each do|source, template|
+  template "/home/svn2git/#{template[:path]}" do
+    source "#{source}"
+    owner "svn2git"
+    group "svn2git"
+    mode template[:permission]
+  end
 end
 
 # Download Repository
-bash "clone-svn2git" do
+bash 'clone-svn2git' do
   cwd '/home/svn2git'
   user "svn2git"
   group "svn2git"
@@ -83,7 +97,7 @@ bash "clone-svn2git" do
 
   git clone git://github.com/TYPO3/Svn2Git.git
 
-EOH
+  EOH
   not_if { ::File.exists? "/home/svn2git/Svn2Git" }
 end
 
@@ -91,7 +105,8 @@ end
 cron "reset-demo" do
   hour "1,13"
   minute "0"
-  user "svn2git"
+  user "root"
   mailto "fabien.udriot@typo3.org"
-  command "cd /home/svn2git/Svn2Git; /usr/bin/flock -n /tmp/svn2git.lockfile /usr/bin/php console.php"
+  command "schroot -c sid64 /home/svn2git/Scripts/svn2git.sh"
+  #command "cd /home/svn2git/Svn2Git; /usr/bin/flock -n /tmp/svn2git.lockfile /usr/bin/php console.php"
 end
