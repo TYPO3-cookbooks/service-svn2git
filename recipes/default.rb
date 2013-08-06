@@ -61,10 +61,10 @@ end
 
 templates = {
   # For (my) convenience sake, add some git default shortcut
-  'gitconfig.erb' => {
-    :path => '.gitconfig',
-    :permission => 0644
-  },
+  #'gitconfig.erb' => {
+  #  :path => '.gitconfig',
+  #  :permission => 0644
+  #},
 
   # Authorized key to log-in
   'authorized_keys.erb' => {
