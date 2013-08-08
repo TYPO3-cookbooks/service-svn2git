@@ -102,11 +102,11 @@ bash 'clone-svn2git' do
 end
 
 # Add cron task
-cron "reset-demo" do
+cron "svn2git-job" do
   hour "1,13"
   minute "0"
-  user "root"
+  user "svn2git"
   mailto "fabien.udriot@typo3.org"
-  command "schroot -c sid64 /home/svn2git/Scripts/svn2git.sh"
-  #command "cd /home/svn2git/Svn2Git; /usr/bin/flock -n /tmp/svn2git.lockfile /usr/bin/php console.php"
+  #command "schroot -c sid64 /home/svn2git/Scripts/svn2git.sh"
+  command "/home/svn2git/Scripts/svn2git.sh"
 end
