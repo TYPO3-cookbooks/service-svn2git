@@ -1,0 +1,25 @@
+---
+driver:
+  name: vagrant
+
+verifier:
+  name: inspec
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: debian-7.8
+  - name: debian-8.2
+
+suites:
+  - name: default
+    run_list:
+      - recipe[service-svn2git::default]
+    attributes:
+      site-proxytypo3org:
+        ssl_certificate: wildcard.vagrant
+    driver_config:
+      network:
+      - ["private_network", {ip: "192.168.88.18"}]
+      - ["forwarded_port", {guest: 22002, host: 22002, auto_correct: true}]
