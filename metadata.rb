@@ -1,3 +1,4 @@
+name             "service-svn2git"
 maintainer       "TYPO3 Association"
 maintainer_email "fabien.udriot@typo3.org"
 license          "Apache 2.0"
